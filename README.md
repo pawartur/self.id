@@ -1,4 +1,4 @@
-# SelfID
+# SelfID - Artur
 
 Monorepo for the SelfID [SDK](#sdk) and [reference application](#application).
 

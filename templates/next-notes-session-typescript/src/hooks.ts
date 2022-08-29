@@ -14,7 +14,6 @@ import { useAtom } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
 import { useCallback, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import {  DIDSession } from 'did-session'
 
 import { draftNoteAtom, editionStateAtom } from './state'
 import type { EditionState, ModelTypes, Note, Notes } from './types'
@@ -24,18 +23,8 @@ function useConnect(): () => Promise<SelfID<ModelTypes> | null> {
   return useCallback(async () => {
     // @ts-ignore
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    let sessionStr = localStorage.getItem('didsession')
-    if (sessionStr) {
-      const sessionValid = await DIDSession.fromSession(sessionStr)
-      if (sessionValid.expireInSecs < 60 *  60 * 2) sessionStr = null
-    }
     // @ts-ignore
-    const selfid = await connect(new EthereumAuthProvider(window.ethereum, accounts[0]), sessionStr)
-    const session = selfid?.client.session
-    if (session) {
-      localStorage.setItem('didsession', session.serialize())
-    }
-    return selfid
+    return await connect(new EthereumAuthProvider(window.ethereum, accounts[0]))
   }, [connect])
 }
 

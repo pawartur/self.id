@@ -1,10 +1,9 @@
-import {  usePublicRecord } from '@self.id/framework'
+import { AvatarPlaceholder, usePublicRecord } from '@self.id/framework'
 import { Anchor, Avatar, Box, Nav, Text } from 'grommet'
 import Link from 'next/link'
 
 import { useNotesRecord } from '../hooks'
 import { getProfileInfo } from '../utils'
-import AvatarPlaceholder from './AvatarPlaceholder'
 
 type Props = {
   did: string
